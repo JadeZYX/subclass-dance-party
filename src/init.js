@@ -1,7 +1,7 @@
-$(document).ready(function() {
+$(document).ready(function () {
   window.dancers = [];
 
-  $('.addDancerButton').on('click', function(event) {
+  $('.addDancerButton').on('click', function (event) {
     /* This function sets up the click handlers for the create-dancer
      * buttons on dancefloor.html. You should only need to make one small change to it.
      * As long as the "data-dancer-maker-function-name" attribute of a
@@ -16,18 +16,30 @@ $(document).ready(function() {
      * to the stage.
      */
     var dancerMakerFunctionName = $(this).data('dancer-maker-function-name');
+    //$ is Jquery func, return this object. then .data()can read data attributes on "dancer-maker-function-name"
 
     // get the maker function for the kind of dancer we're supposed to make
     var dancerMakerFunction = window[dancerMakerFunctionName];
+    //window is an object, so here like window . a
 
     // make a dancer with a random position
 
-    var dancer = dancerMakerFunction(
-      $("body").height() * Math.random(),
-      $("body").width() * Math.random(),
-      Math.random() * 1000
-    );
-    $('body').append(dancer.$node);
+    if (dancerMakerFunction === PopDancer) {
+      var dancer = new (dancerMakerFunction)(
+        200,
+        $("body").width() * Math.random(),
+        Math.random() * 1000
+      );
+      $('body').append(dancer.$node);
+    } else {
+      var dancer = new (dancerMakerFunction)(
+        $("body").height() * Math.random(),
+        $("body").width() * Math.random(),
+        Math.random() * 1000
+      );
+      $('body').append(dancer.$node);
+    }
   });
 });
+
 
